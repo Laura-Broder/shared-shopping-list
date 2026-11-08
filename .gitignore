@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.wrangler/
+.dev.vars*
+.env*
+!.env.example
+*.tar.gz
+*.zip
+src/assets.generated.ts
+.openai/hosting.json
+coverage/
+*.log
+*.db
+*.db-*
+*.sqlite*
+.DS_Store

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" /><meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <meta name="theme-color" content="#254f42" /><meta
+      name="description"
+      content="רשימת הקניות הביתית שלנו — מוסיפים, קונים ומסמנים ביחד."
+    />
+    <title>עגלה · הרשימה שלנו</title
+    ><link rel="icon" href="/icon.svg" /><link rel="manifest" href="/manifest.webmanifest" /><link
+      rel="stylesheet"
+      href="/app.css"
+    />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="עגלה, הרשימה שלנו"
+          ><span class="brand-icon"
+            ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M3 4h3l3 12h10l3-9H7M10 20h.01M18 20h.01"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              /></svg></span
+          ><span>עגלה<span class="brand-caption">כותבים כאן. קונים ביחד.</span></span></a
+        >
+        <div class="header-actions"
+          ><span id="connection" class="connection" role="status"><i></i><span>מתחברים…</span></span
+          ><button
+            id="settings"
+            class="icon-button"
+            aria-label="אפשרויות הרשימה"
+            title="אפשרויות הרשימה"
+            ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M5 7h14M5 12h14M5 17h14M9 5v4M15 10v4M10 15v4"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+              /></svg></button
+        ></div>
+      </header>
+      <main id="main-scroll">
+        <section id="list-panel" class="list-section" aria-label="רשימת הקניות">
+          <div class="list-top"
+            ><div class="list-title"
+              ><h1>הרשימה שלנו</h1><span class="count" id="active-count">0</span></div
+            ><div class="filter-tabs" aria-label="סינון הרשימה"
+              ><button class="filter active" data-filter="all" aria-pressed="true">הכול</button
+              ><button class="filter" data-filter="pending" aria-pressed="false">לקנייה</button
+              ><button class="filter" data-filter="purchased" aria-pressed="false"
+                >נקנו</button
+              ></div
+            ></div
+          >
+          <div id="shopping-bar" class="shopping-bar" hidden
+            ><div class="shopping-bar-inner"
+              ><div class="progress-copy"
+                ><span class="progress-icon" aria-hidden="true">✓</span
+                ><div
+                  ><strong id="progress-label"></strong><span>כל סימון מתעדכן לשניכם</span></div
+                ></div
+              ><button id="clear-button" class="clear-button"
+                >ניקוי מה שנקנה <span aria-hidden="true">←</span></button
+              ></div
+            ></div
+          >
+          <div id="search-wrap" class="search-wrap" hidden
+            ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="1.6" />
+              <path
+                d="m15 15 5 5"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              /></svg
+            ><label class="sr-only" for="search">חיפוש ברשימה</label
+            ><input id="search" type="search" placeholder="חיפוש ברשימה…" autocomplete="off"
+          /></div>
+          <div id="list" aria-live="polite" aria-busy="true"
+            ><div class="loading-state">הרשימה בדרך…</div></div
+          >
+          <div id="empty" class="empty-state" hidden
+            ><div class="empty-icon" aria-hidden="true">＋</div><h3>מתחילים עם מה שחסר</h3
+            ><p>כתבו מוצר בשורת ההודעה למטה.<br />הרשימה תישמר ותתעדכן לשניכם.</p></div
+          >
+          <div id="no-results" class="empty-state small" hidden
+            ><h3>אין כאן מוצרים כרגע</h3><p>אפשר לשנות את החיפוש או את הסינון.</p></div
+          >
+        </section>
+      </main>
+      <div id="feedback-panel" class="feedback-panel" hidden
+        ><button
+          id="feedback-dismiss"
+          class="feedback-dismiss"
+          type="button"
+          aria-label="סגירת אישור ההודעה"
+          >×</button
+        ><div
+          id="chat-messages"
+          class="chat-messages"
+          role="log"
+          aria-label="אישור הוספת מוצרים"
+          aria-live="polite"
+          aria-relevant="additions text"
+        ></div
+      ></div>
+      <section id="composer" class="composer" aria-label="כתיבת הודעה להוספת מוצרים">
+        <form id="add-form" class="composer-form"
+          ><label for="grocery-input" class="sr-only">מה להוסיף לרשימת הקניות?</label
+          ><textarea
+            id="grocery-input"
+            rows="1"
+            maxlength="2000"
+            placeholder="מה להוסיף לרשימה?"
+            required
+            enterkeyhint="send"
+            spellcheck="true"
+          ></textarea
+          ><button
+            id="add-button"
+            type="submit"
+            class="send-button"
+            aria-label="שליחת מוצרים לרשימה"
+            title="שליחה"
+            disabled
+            ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="m12 5-6 6m6-6 6 6M12 5v14"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              /></svg></button
+        ></form>
+        <div class="composer-caption"
+          ><span><span id="parser-mode">פענוח רגיל</span> · כמה מוצרים יחד</span
+          ><span class="desktop-hint">Enter לשליחה · Shift+Enter לשורה חדשה</span></div
+        >
+      </section>
+      <div id="toast" class="toast" role="status" hidden
+        ><span id="toast-message"></span><button id="undo" hidden>ביטול</button></div
+      >
+    </div>
+    <dialog id="edit-dialog"
+      ><form id="edit-form"
+        ><div class="dialog-top"
+          ><h2>עדכון מוצר</h2
+          ><button type="button" class="icon-button" data-close="edit-dialog" aria-label="סגירה"
+            >×</button
+          ></div
+        ><label for="edit-name">שם המוצר</label
+        ><input id="edit-name" maxlength="100" required /><div class="field-row"
+          ><div
+            ><label for="edit-quantity">כמות</label
+            ><input
+              id="edit-quantity"
+              type="number"
+              min="0.01"
+              max="10000"
+              step="any"
+              required
+              inputmode="decimal" /></div
+          ><div
+            ><label for="edit-unit">יחידת מידה</label
+            ><select id="edit-unit"></select></div></div
+        ><label for="edit-department">מחלקה</label
+        ><select id="edit-department"></select
+        ><p class="dialog-note">שינויים יופיעו גם בטלפון השני.</p
+        ><div class="dialog-bottom"
+          ><button id="delete-item" class="danger" type="button">מחיקת המוצר</button
+          ><button class="primary" id="save-edit" type="submit">שמירת שינויים</button></div
+        ></form
+      ></dialog
+    >
+    <dialog id="settings-dialog"
+      ><div class="dialog-top"
+        ><h2>הרשימה שלנו</h2
+        ><button type="button" class="icon-button" data-close="settings-dialog" aria-label="סגירה"
+          >×</button
+        ></div
+      ><p>הרשימה נשמרת בענן ומתעדכנת בשני הטלפונים. כרגע דרוש חיבור לאינטרנט.</p
+      ><div class="ai-setting"
+        ><label class="ai-label" for="ai-toggle"
+          ><span>פענוח חכם של הודעות</span><input id="ai-toggle" type="checkbox" disabled /></label
+        ><p id="ai-note" class="dialog-note"
+          >הפענוח החכם עדיין לא הופעל. אפשר להמשיך בפענוח הרגיל.</p
+        ></div
+      ><button id="share-button" class="settings-action"
+        >העתקת קישור לבן או לבת הזוג <span aria-hidden="true">↗</span></button
+      ><p id="share-note" class="dialog-note">קישור אישי מאפשר גישה לרשימה. שתפו אותו רק ביניכם.</p
+      ><button id="export-button" class="settings-action"
+        >הורדת עותק של הרשימה <span aria-hidden="true">↓</span></button
+      ><details
+        ><summary>הוספה למסך הבית</summary
+        ><p
+          >באייפון: בספארי, פתחו את תפריט השיתוף ובחרו ״הוספה למסך הבית״.<br />באנדרואיד: בתפריט
+          הדפדפן בחרו ״הוספה למסך הבית״ או ״התקנה״.</p
+        ></details
+      ><button id="forget-key" class="text-button">יציאה מהגישה האישית במכשיר הזה</button></dialog
+    >
+    <dialog id="clear-dialog"
+      ><div class="dialog-top"
+        ><h2>לפנות מקום לקנייה הבאה?</h2
+        ><button type="button" class="icon-button" data-close="clear-dialog" aria-label="סגירה"
+          >×</button
+        ></div
+      ><p id="clear-description"></p
+      ><div class="dialog-bottom"
+        ><button class="secondary" data-close="clear-dialog">חזרה לרשימה</button
+        ><button class="primary" id="confirm-clear">כן, לנקות</button></div
+      ></dialog
+    >
+    <dialog id="auth-dialog"
+      ><span class="eyebrow">הרשימה שלכם, ורק שלכם</span
+      ><h2 id="auth-title">הרשימה שלנו נשארת פרטית</h2
+      ><p id="auth-copy">כדי לפתוח את הרשימה, נכנסים עם חשבון ChatGPT שקיבל הרשאת גישה לאתר.</p
+      ><form id="auth-form" hidden
+        ><label for="access-key">קישור גישה או מפתח אישי</label
+        ><input id="access-key" type="password" autocomplete="off" required /><button
+          class="primary"
+          type="submit"
+          >פתיחת הרשימה</button
+        ></form
+      ><p id="auth-error" class="warning" hidden></p
+      ><a
+        id="signin-link"
+        class="primary signin-link"
+        href="/signin-with-chatgpt?return_to=%2F"
+        target="_top"
+        >כניסה עם ChatGPT</a
+      ></dialog
+    >
+    <noscript>כדי להשתמש ברשימת הקניות יש להפעיל JavaScript בדפדפן.</noscript>
+  </body></html
+>

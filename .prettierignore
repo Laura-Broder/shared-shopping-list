@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.wrangler/
+src/assets.generated.ts
+package-lock.json
+drizzle/
+.env*
+.dev.vars*
+.openai/hosting.json

@@ -1,0 +1,17 @@
+{
+  "name": "agalah-shopping-list",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-11-06",
+  "workers_dev": true,
+  "vars": {
+    "AUTH_MODE": "links",
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "agalah-shopping-list",
+      "database_id": "REPLACE_AFTER_DATABASE_CREATION",
+      "migrations_dir": "drizzle",
+    },
+  ],
+}

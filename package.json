@@ -1,0 +1,32 @@
+{
+  "name": "shared-shopping-list",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "node scripts/build.mjs",
+    "check": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "db:local": "wrangler d1 migrations apply DB --local",
+    "db:remote": "wrangler d1 migrations apply DB --remote",
+    "deploy": "wrangler deploy",
+    "db:generate": "drizzle-kit generate",
+    "predev": "npm run build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "drizzle-kit": "^0.31.10",
+    "drizzle-orm": "^0.45.2",
+    "esbuild": "^0.25.0",
+    "prettier": "3.6.2",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.158.0"
+  },
+  "description": "A Hebrew shared shopping list with a TypeScript client, Cloudflare Workers, and D1.",
+  "engines": {
+    "node": ">=24"
+  }
+}
