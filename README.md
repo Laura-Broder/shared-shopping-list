@@ -96,7 +96,7 @@ npm run format:check
 
 The tests execute API operations against real in-memory SQLite through a D1-shaped adapter. They cover Hebrew parsing, authorization, duplicate retries, stale revisions, cleanup/undo, product identity, and AI validation, caching, and quota behavior. The adapter asserts the query/parameter budgets used by bulk cleanup; it is not a complete D1 emulator.
 
-OpenAI calls are mocked. The suite does not prove live model availability, mobile browser behavior, or production D1 behavior. GitHub Actions is configured to install dependencies, check formatting, build, type-check, and run the tests; its first hosted run will occur after publication.
+OpenAI calls are mocked. The suite does not prove live model availability, mobile browser behavior, or production D1 behavior. [GitHub Actions](https://github.com/Laura-Broder/shared-shopping-list/actions/workflows/ci.yml) installs dependencies, checks formatting, builds, type-checks, and runs the tests on pushes and pull requests.
 
 ## Deployment
 
